@@ -14,5 +14,16 @@ module.exports = {
         }
 
         return response.json(ong);
+    },
+
+    async removeOng(request, response){
+
+        const ong_id = request.headers.authorization;  
+
+        await connection('incidents').where('ong_id', ong_id).delete();
+
+        await connection('ongs').where('id', ong_id).delete();
+
+        return response.status(204).send();
     }
 }
